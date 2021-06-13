@@ -1,5 +1,7 @@
 import pygame
 from pygame.locals import *
+import sys
+import random
 
 pygame.init()
 vec = pygame.math.Vector2 # 2차원은 2
@@ -68,12 +70,17 @@ class Player(pygame.sprite.Sprite):
 class platform(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.surf = pygame.Surface((WIDTH, 20))
-        self.surf.fill((255,0,0))
-        self.rect = self.surf.get_rect(center = (WIDTH/2, HEIGHT - 10))
+        self.surf = pygame.Surface((random.randint(50, 100), 12))
+        self.surf.fill((0,255,0))
+        self.rect = self.surf.get_rect(center = (random.randint(0, WIDTH-10),
+                                                 random.randint(0, HEIGHT-30)))
 
 PT1 = platform()
 P1 = Player()
+
+PT1.surf = pygame.Surface((WIDTH, 20))
+PT1.surf.fill((255,0,0))
+PT1.rect = PT1.surf.get_rect(center = (WIDTH/2, HEIGHT - 10))
 
 all_sprites = pygame.sprite.Group()
 all_sprites.add(PT1)
@@ -81,6 +88,11 @@ all_sprites.add(P1)
 
 platforms = pygame.sprite.Group()
 platforms.add(PT1)
+
+for x in range(random.randint(5,10)):
+    pl = platform()
+    platforms.add(pl)
+    all_sprites.add(pl)
 
 while True:
     for event in pygame.event.get():
