@@ -94,6 +94,15 @@ for x in range(random.randint(5,10)):
     platforms.add(pl)
     all_sprites.add(pl)
 
+def plat_gen():
+    while len(platforms) < 11:
+        width = random.randrange(50, 100)
+        p = platform()
+        p.rect.center = (random.randrange(0, WIDTH - width),
+                         random.randrange(-50, 0))
+        platforms.add(p)
+        all_sprites.add(p)
+
 while True:
     for event in pygame.event.get():
         if event.type == QUIT:
@@ -102,6 +111,15 @@ while True:
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_SPACE:
                 P1.jump()
+
+    if P1.rect.top <= HEIGHT / 3:
+        P1.pos.y += abs(P1.vel.y)
+        for plat in platforms:
+            plat.rect.y += abs(P1.vel.y)
+            if plat.rect.top >= HEIGHT:
+                plat.kill()
+
+    plat_gen()
 
     displaysurface.fill((0,0,0))
 
