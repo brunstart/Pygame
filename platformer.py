@@ -22,8 +22,10 @@ pygame.display.set_caption('Platformer Game')   #윈도우 이름
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
+        self.character_image = pygame.image.load("character.png")
+        self.character_image = pygame.transform.scale(self.character_image, (30,30))
         self.surf = pygame.Surface((30,30))
-        self.surf.fill((128,255,40))
+        self.surf = self.character_image
         self.rect = self.surf.get_rect()
 
         self.pos = vec((10, 360))
